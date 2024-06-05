@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose"
 
-interface Message extends Document {
+export interface Message extends Document {
     content: string
     createdAt: Date
 }
@@ -17,7 +17,7 @@ const messageSchema: Schema<Message> = new mongoose.Schema({
     }
 })
 
-interface User extends Document {
+export interface User extends Document {
     username: string
     email: string
     password: string
@@ -31,7 +31,8 @@ interface User extends Document {
 const userSchema: Schema<User> = new mongoose.Schema({
     username: { 
         type: String, 
-        required: [ true, "username is required" ] 
+        required: [ true, "username is required" ],
+        unique: true 
     },
     email: { 
         type: String, 
@@ -64,5 +65,5 @@ const userSchema: Schema<User> = new mongoose.Schema({
 })
 
 
-export const User = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>('User', userSchema)
-export const Message = (mongoose.models.Message as mongoose.Model<Message>) || mongoose.model<Message>('Message', messageSchema)
+export const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>('User', userSchema)
+export const MessageModel = (mongoose.models.Message as mongoose.Model<Message>) || mongoose.model<Message>('Message', messageSchema)
